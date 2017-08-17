@@ -66,7 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LoginActivityListener {
         let loginParameters:LoginParameters = LoginParameters.shared()
         loginParameters.applicationWindow = self.window
         loginParameters.url =  "https://sandbox.unvired.io/UMP/"
-        loginParameters.company = "UNVIRED"
         loginParameters.applicationTitle = NSLocalizedString("Unvired-REST-Sample", comment: "")
         loginParameters.applicationLogoForiPad = nil
         loginParameters.applicationLogoForiPhone = nil
