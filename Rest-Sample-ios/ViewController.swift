@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     }
     
     func showFrameworkSettingsViewController() {
-        let settingsViewController: FrameworkSettingsViewController = FrameworkSettingsViewController(style: UITableViewStyle.grouped)
+        let settingsViewController: FrameworkSettingsViewController = FrameworkSettingsViewController(style: UITableView.Style.grouped)
         settingsViewController.delegate = self
         let navController: UINavigationController = UINavigationController(rootViewController: settingsViewController)
         navController.modalPresentationStyle = UIModalPresentationStyle.formSheet
@@ -72,13 +72,13 @@ class ViewController: UIViewController {
     
     @IBAction func menuButtonAction(_ sender: AnyObject) {
         let alertController: UIAlertController = UIAlertController(title: nil, message: nil,
-                                                                   preferredStyle: UIAlertControllerStyle.actionSheet)
+                                                                   preferredStyle: UIAlertController.Style.actionSheet)
         
-        let settingsAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: UIAlertActionStyle.default) { (action: UIAlertAction) -> Void in self.showFrameworkSettingsViewController()
+        let settingsAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in self.showFrameworkSettingsViewController()
         }
         
         
-        let cancelAction: UIAlertAction = UIAlertAction(title:  NSLocalizedString("Cancel",  comment: ""), style: UIAlertActionStyle.cancel, handler: nil)
+        let cancelAction: UIAlertAction = UIAlertAction(title:  NSLocalizedString("Cancel",  comment: ""), style: UIAlertAction.Style.cancel, handler: nil)
         
         alertController.addAction(settingsAction)
         alertController.addAction(cancelAction)
@@ -94,8 +94,8 @@ class ViewController: UIViewController {
     
     @IBAction func getWeatherButtonClicked(_ sender: Any) {
         
-        if cityName.characters.count == 0 || cityName == "" {
-            Utility.displayStringInAlertView("", desc: "Enter City.")
+        if cityName.count == 0 || cityName == "" {
+            Utility.displayStringInAlertView("", desc: "Enter City.", viewController: self)
             return
         }
         
@@ -112,7 +112,7 @@ class ViewController: UIViewController {
     func showBusyIndicator() {
         alertController = UIAlertController(title: nil, message: "Please wait\n\n", preferredStyle: .alert)
         
-        let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let spinnerIndicator = UIActivityIndicatorView(style: .whiteLarge)
         
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.black
@@ -174,7 +174,7 @@ extension ViewController : UITextFieldDelegate {
         cityName = someText
         print("City: \(String(describing: cityName))")
         
-        if(cityName.characters.count == 0) {
+        if(cityName.count == 0) {
             self.contentView.isHidden = true
         }
         
@@ -186,7 +186,7 @@ extension ViewController : UITextFieldDelegate {
 
 extension ViewController: NetworkConnectionDelegate {
     
-    func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<NSObject, AnyObject>) {
+    func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<String, AnyObject>) {
         self.contentView.isHidden = false
         hideBusyIndicator()
         self.weatherHeader = getWeatherHeader(responseHaeders)[0]
@@ -199,25 +199,15 @@ extension ViewController: NetworkConnectionDelegate {
         Utility.displayAlertWithOKButton("", message: errorMessage.localizedDescription, viewController: self)
     }
     
-    func getWeatherHeader(_ dataBEs: Dictionary<NSObject, AnyObject>) -> [WEATHER_HEADER] {
+    func getWeatherHeader(_ dataBEs: Dictionary<String, AnyObject>) -> [WEATHER_HEADER] {
         var weatherHeader: [WEATHER_HEADER] = []
-        var headers:Dictionary<NSObject, AnyObject>?
         
-        for (key, values) in dataBEs {
-            if key as! String == "WEATHER" {
-                headers = values as? Dictionary<NSObject, AnyObject>
-            }
-        }
-        
-        if let headers = headers {
-            for (header, _) in headers {
+        for (_, beDictionary) in dataBEs {
+            for (header, _) in beDictionary as! Dictionary<DataStructure, [IDataStructure]> {
+                // Header
                 weatherHeader.append(header as! WEATHER_HEADER)
             }
         }
         return weatherHeader
     }
-    
-    
 }
-
-
