@@ -4,7 +4,7 @@ REST Service sample on iOS. This application retreives weather information for a
 **Prerequisites**
 -----------------
 1. Mac running version 10.14 (macOS Mojave) or higher.
-2. Xcode 10.0:
+2. Xcode 11.0:
 You can get the latest Xcode from https://developer.apple.com/xcode
 3. Cocoapods:
 This project is dependent on UnviredSDK library which is distributed as a cocoapod. If you don't have a cocoapod setup, you can set it up from https://cocoapods.org
