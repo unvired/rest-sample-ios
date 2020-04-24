@@ -112,7 +112,7 @@ class ViewController: UIViewController {
     func showBusyIndicator() {
         alertController = UIAlertController(title: nil, message: "Please wait\n\n", preferredStyle: .alert)
         
-        let spinnerIndicator = UIActivityIndicatorView(style: .whiteLarge)
+        let spinnerIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.black
