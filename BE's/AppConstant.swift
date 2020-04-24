@@ -5,13 +5,13 @@ import UIKit
 class AppConstants {
 
 	// App Name
-	static let APP_NAME = "UnviredRESTSample"
+	static let APP_NAME = "UNVIRED_REST_SAMPLE"
 	
 	// BE Names
 	static let BE_WEATHER = "WEATHER";
 
 	
 	// PA Function Names
-	static let PA_GET_WEATHER = "UNVIREDRESTSAMPLE_PA_GET_WEATHER"; // Get Weather
+    static let PA_GET_WEATHER = "UNVIRED_REST_SAMPLE_PA_GET_WEATHER"; // Get Weather
 
 }
